@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/animate_in.dart';
+import '../widgets/bouncy.dart';
 
 class BrowseScreen extends StatelessWidget {
   const BrowseScreen({Key? key}) : super(key: key);
@@ -30,16 +32,41 @@ class BrowseScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildSearchBar(),
-                  const SizedBox(height: 36),
-                  _buildSectionHeader("New Releases"),
-                  _buildNewReleases(),
-                  const SizedBox(height: 48),
-                  _buildSectionHeader("Genres"),
-                  _buildGenresGrid(),
-                  const SizedBox(height: 48),
-                  _buildSectionHeader("Charts"),
-                  _buildChartsList(),
+                  const SizedBox(height: 4),
+                  const AnimateIn(child: SearchBarPlaceholder()),
+                  const SizedBox(height: 28),
+                  AnimateIn(
+                    delay: 100,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildSectionHeader("New Releases"),
+                        _buildNewReleases(),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  AnimateIn(
+                    delay: 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildSectionHeader("Genres"),
+                        _buildGenresGrid(),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  AnimateIn(
+                    delay: 300,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildSectionHeader("Charts"),
+                        _buildChartsList(),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 160),
                 ],
               ),
@@ -50,37 +77,16 @@ class BrowseScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchBar() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.black.withOpacity(0.08), width: 1.2),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.search_rounded, color: Colors.grey.shade400, size: 22),
-          const SizedBox(width: 12),
-          Text(
-            "Search genres, artists...", 
-            style: TextStyle(color: Colors.grey.shade400, fontSize: 17, fontWeight: FontWeight.w400)
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildSectionHeader(String title) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: -0.5)),
+          Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, letterSpacing: -0.5)),
           const Text(
             "See All", 
-            style: TextStyle(color: Color(0xFF2196F3), fontWeight: FontWeight.bold, fontSize: 15)
+            style: TextStyle(color: Color(0xFF2196F3), fontWeight: FontWeight.bold, fontSize: 14)
           ),
         ],
       ),
@@ -95,7 +101,7 @@ class BrowseScreen extends StatelessWidget {
     ];
 
     return SizedBox(
-      height: 240,
+      height: 220,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
@@ -103,13 +109,13 @@ class BrowseScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final item = data[index];
           return Container(
-            width: 180,
+            width: 170,
             margin: const EdgeInsets.only(right: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 180,
+                  height: 170,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
                     gradient: LinearGradient(
@@ -150,14 +156,14 @@ class BrowseScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 8),
                 Text(
                   item["title"] as String, 
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)
                 ),
                 Text(
                   item["artist"] as String, 
-                  style: TextStyle(color: Colors.grey.shade500, fontSize: 14, fontWeight: FontWeight.w500)
+                  style: TextStyle(color: Colors.grey.shade500, fontSize: 13, fontWeight: FontWeight.w500)
                 ),
               ],
             ),
@@ -192,16 +198,19 @@ class BrowseScreen extends StatelessWidget {
       ),
       itemCount: genres.length,
       itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            color: genres[index]["color"] as Color,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          padding: const EdgeInsets.all(20),
-          alignment: Alignment.bottomLeft,
-          child: Text(
-            genres[index]["name"] as String,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+        return Bouncy(
+          onTap: () {},
+          child: Container(
+            decoration: BoxDecoration(
+              color: genres[index]["color"] as Color,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            padding: const EdgeInsets.all(20),
+            alignment: Alignment.bottomLeft,
+            child: Text(
+              genres[index]["name"] as String,
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+            ),
           ),
         );
       },
@@ -231,7 +240,7 @@ class BrowseScreen extends StatelessWidget {
           return Column(
             children: [
               ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                 leading: Container(
                   width: 56,
                   height: 56,
@@ -249,6 +258,32 @@ class BrowseScreen extends StatelessWidget {
             ],
           );
         }),
+      ),
+    );
+  }
+}
+
+class SearchBarPlaceholder extends StatelessWidget {
+  const SearchBarPlaceholder({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.black.withOpacity(0.08), width: 1.2),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.search_rounded, color: Colors.grey.shade400, size: 22),
+          const SizedBox(width: 12),
+          Text(
+            "Search genres, artists...", 
+            style: TextStyle(color: Colors.grey.shade400, fontSize: 17, fontWeight: FontWeight.w400)
+          ),
+        ],
       ),
     );
   }

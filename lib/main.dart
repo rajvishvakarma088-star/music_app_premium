@@ -128,7 +128,22 @@ class _MainContainerState extends State<MainContainer> {
       body: Stack(
         children: [
           Scaffold(
-            body: _screens[_currentIndex],
+            body: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 400),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, 0.02),
+                      end: Offset.zero,
+                    ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCirc)),
+                    child: child,
+                  ),
+                );
+              },
+              child: _screens[_currentIndex],
+            ),
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: _currentIndex,
               onTap: (index) => setState(() => _currentIndex = index),
@@ -185,7 +200,7 @@ class _MainContainerState extends State<MainContainer> {
           ),
           if (hasCurrentSong && _panelPosition < 0.1)
             Positioned(
-              bottom: kBottomNavigationBarHeight + 8,
+              bottom: kBottomNavigationBarHeight + 32,
               left: 0,
               right: 0,
               child: MiniPlayer(onExpand: () => _panelController.open()),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/animate_in.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -9,14 +10,14 @@ class SearchScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF9F9F9),
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
+          const SliverAppBar(
             expandedHeight: 120,
             floating: false,
             pinned: true,
             elevation: 0,
-            backgroundColor: const Color(0xFFF9F9F9),
-            surfaceTintColor: const Color(0xFFF9F9F9),
-            flexibleSpace: const FlexibleSpaceBar(
+            backgroundColor: Color(0xFFF9F9F9),
+            surfaceTintColor: Color(0xFFF9F9F9),
+            flexibleSpace: FlexibleSpaceBar(
               titlePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               title: Text(
                 "Search", 
@@ -30,14 +31,21 @@ class SearchScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildSearchBar(),
-                  const SizedBox(height: 36),
-                  const Text(
-                    "Browse Categories", 
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, letterSpacing: -0.5)
+                  const SizedBox(height: 4),
+                  const AnimateIn(child: SearchBarWidget()),
+                  const SizedBox(height: 28),
+                  const AnimateIn(
+                    delay: 100,
+                    child: Text(
+                      "Browse Categories", 
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, letterSpacing: -0.5)
+                    ),
                   ),
-                  const SizedBox(height: 16),
-                  _buildCategoriesGrid(),
+                  const SizedBox(height: 8),
+                  const AnimateIn(
+                    delay: 200,
+                    child: CategoriesGrid(),
+                  ),
                   const SizedBox(height: 160),
                 ],
               ),
@@ -47,10 +55,15 @@ class SearchScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildSearchBar() {
+class SearchBarWidget extends StatelessWidget {
+  const SearchBarWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -68,8 +81,13 @@ class SearchScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildCategoriesGrid() {
+class CategoriesGrid extends StatelessWidget {
+  const CategoriesGrid({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     final categories = [
       {"name": "Pop", "colors": [const Color(0xFF1A237E), const Color(0xFF0D164D)]},
       {"name": "Hip-Hop", "colors": [const Color(0xFF00C853), const Color(0xFF2E7D32)]},
