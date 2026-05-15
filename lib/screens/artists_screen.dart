@@ -14,7 +14,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF9F9F9),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -22,8 +22,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
             floating: false,
             pinned: true,
             elevation: 0,
-            backgroundColor: Colors.white,
-            surfaceTintColor: Colors.white,
+            backgroundColor: const Color(0xFFF9F9F9),
+            surfaceTintColor: const Color(0xFFF9F9F9),
             flexibleSpace: const FlexibleSpaceBar(
               titlePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               title: Text(
@@ -77,8 +77,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 color: isSelected ? const Color(0xFF1C1C1E) : Colors.white,
                 borderRadius: BorderRadius.circular(22),
                 border: Border.all(
-                  color: isSelected ? Colors.transparent : Colors.grey.shade200,
-                  width: 1,
+                  color: isSelected ? Colors.transparent : Colors.black.withOpacity(0.08),
+                  width: 1.2,
                 ),
               ),
               child: Center(
@@ -108,60 +108,71 @@ class _LibraryScreenState extends State<LibraryScreen> {
     ];
 
     return Column(
-      children: playlists.map((p) => ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        leading: Container(
-          width: 64,
-          height: 64,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            gradient: LinearGradient(
-              colors: p["colors"] as List<Color>,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+      children: playlists.map((p) => Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.black.withOpacity(0.08), width: 1.2),
+          boxShadow: [
+            BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4))
+          ],
+        ),
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          leading: Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              gradient: LinearGradient(
+                colors: p["colors"] as List<Color>,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: Center(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: 28,
+                    height: 28,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  Container(
+                    width: 14,
+                    height: 14,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  Container(
+                    width: 4,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.15),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          child: Center(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                Container(
-                  width: 16,
-                  height: 16,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                Container(
-                  width: 4,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.15),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ],
-            ),
+          title: Text(
+            p["name"] as String, 
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17, letterSpacing: -0.5)
           ),
+          subtitle: Text(
+            "Playlist • ${p["count"]} songs", 
+            style: TextStyle(color: Colors.grey.shade500, fontSize: 14, fontWeight: FontWeight.w500)
+          ),
+          trailing: Icon(Icons.chevron_right_rounded, color: Colors.grey.shade400, size: 22),
         ),
-        title: Text(
-          p["name"] as String, 
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, letterSpacing: -0.5)
-        ),
-        subtitle: Text(
-          "Playlist • ${p["count"]} songs", 
-          style: TextStyle(color: Colors.grey.shade500, fontSize: 15, fontWeight: FontWeight.w500)
-        ),
-        trailing: Icon(Icons.chevron_right_rounded, color: Colors.grey.shade400, size: 24),
       )).toList(),
     );
   }

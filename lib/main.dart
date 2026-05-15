@@ -131,24 +131,40 @@ class _MainContainerState extends State<MainContainer> {
             body: _screens[_currentIndex],
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: _currentIndex,
-              onTap: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
+              onTap: (index) => setState(() => _currentIndex = index),
               type: BottomNavigationBarType.fixed,
-              selectedItemColor: Colors.blue,
-              unselectedItemColor: Colors.grey.shade400,
+              backgroundColor: Colors.white,
+              selectedItemColor: const Color(0xFF2196F3),
+              unselectedItemColor: const Color(0xFF8E8E93),
               showUnselectedLabels: true,
-              selectedFontSize: 10,
-              unselectedFontSize: 10,
+              selectedFontSize: 11,
+              unselectedFontSize: 11,
+              selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
+              unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
               elevation: 0,
               items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: "Home"),
-                BottomNavigationBarItem(icon: Icon(Icons.sensors), activeIcon: Icon(Icons.sensors), label: "Browse"),
-                BottomNavigationBarItem(icon: Icon(Icons.search), activeIcon: Icon(Icons.search), label: "Search"),
-                BottomNavigationBarItem(icon: Icon(Icons.bar_chart), activeIcon: Icon(Icons.bar_chart), label: "Library"),
-                BottomNavigationBarItem(icon: Icon(Icons.settings_outlined), activeIcon: Icon(Icons.settings), label: "Settings"),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home_outlined), 
+                  activeIcon: Icon(Icons.home_rounded), 
+                  label: "Home"
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.rss_feed_rounded), 
+                  label: "Browse"
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.search_rounded), 
+                  label: "Search"
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.bar_chart_rounded), 
+                  label: "Library"
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.settings_outlined), 
+                  activeIcon: Icon(Icons.settings_rounded), 
+                  label: "Settings"
+                ),
               ],
             ),
           ),

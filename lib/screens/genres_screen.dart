@@ -6,7 +6,7 @@ class BrowseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF9F9F9),
       body: CustomScrollView(
         slivers: [
           const SliverAppBar(
@@ -14,23 +14,13 @@ class BrowseScreen extends StatelessWidget {
             floating: false,
             pinned: true,
             elevation: 0,
-            backgroundColor: Colors.white,
-            surfaceTintColor: Colors.white,
+            backgroundColor: Color(0xFFF9F9F9),
+            surfaceTintColor: Color(0xFFF9F9F9),
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              title: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Browse", 
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.black, letterSpacing: -1.0)
-                  ),
-                  Text(
-                    "Explore music by mood & genre", 
-                    style: TextStyle(fontSize: 16, color: Colors.grey, fontWeight: FontWeight.w500)
-                  ),
-                ],
+              title: Text(
+                "Browse", 
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 34, color: Colors.black, letterSpacing: -1.0)
               ),
             ),
           ),
@@ -40,7 +30,8 @@ class BrowseScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 12),
+                  _buildSearchBar(),
+                  const SizedBox(height: 36),
                   _buildSectionHeader("New Releases"),
                   _buildNewReleases(),
                   const SizedBox(height: 48),
@@ -53,6 +44,27 @@ class BrowseScreen extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchBar() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.black.withOpacity(0.08), width: 1.2),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.search_rounded, color: Colors.grey.shade400, size: 22),
+          const SizedBox(width: 12),
+          Text(
+            "Search genres, artists...", 
+            style: TextStyle(color: Colors.grey.shade400, fontSize: 17, fontWeight: FontWeight.w400)
           ),
         ],
       ),

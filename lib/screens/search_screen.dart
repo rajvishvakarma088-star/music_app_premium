@@ -6,30 +6,39 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF9F9F9),
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar(
-            expandedHeight: 100,
+          SliverAppBar(
+            expandedHeight: 120,
             floating: false,
             pinned: true,
             elevation: 0,
-            flexibleSpace: FlexibleSpaceBar(
-              titlePadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              title: Text("Search", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+            backgroundColor: const Color(0xFFF9F9F9),
+            surfaceTintColor: const Color(0xFFF9F9F9),
+            flexibleSpace: const FlexibleSpaceBar(
+              titlePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              title: Text(
+                "Search", 
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 34, color: Colors.black, letterSpacing: -1.0)
+              ),
             ),
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildSearchBar(),
-                  const SizedBox(height: 32),
-                  const Text("Browse Categories", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 36),
+                  const Text(
+                    "Browse Categories", 
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, letterSpacing: -0.5)
+                  ),
                   const SizedBox(height: 16),
                   _buildCategoriesGrid(),
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 160),
                 ],
               ),
             ),
@@ -41,16 +50,20 @@ class SearchScreen extends StatelessWidget {
 
   Widget _buildSearchBar() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.black.withOpacity(0.08), width: 1.2),
       ),
       child: Row(
         children: [
-          Icon(Icons.search, color: Colors.grey.shade400),
+          Icon(Icons.search_rounded, color: Colors.grey.shade400, size: 22),
           const SizedBox(width: 12),
-          Text("Artists, songs, podcasts", style: TextStyle(color: Colors.grey.shade400, fontSize: 16)),
+          Text(
+            "Artists, songs, podcasts", 
+            style: TextStyle(color: Colors.grey.shade400, fontSize: 17, fontWeight: FontWeight.w400)
+          ),
         ],
       ),
     );
@@ -58,18 +71,18 @@ class SearchScreen extends StatelessWidget {
 
   Widget _buildCategoriesGrid() {
     final categories = [
-      {"name": "Pop", "color1": Color(0xFF1A237E), "color2": Color(0xFF3949AB)},
-      {"name": "Hip-Hop", "color1": Color(0xFF00C853), "color2": Color(0xFF69F0AE)},
-      {"name": "R&B", "color1": Color(0xFF311B92), "color2": Color(0xFF673AB7)},
-      {"name": "Electronic", "color1": Color(0xFF880E4F), "color2": Color(0xFFE91E63)},
-      {"name": "Rock", "color1": Color(0xFF00838F), "color2": Color(0xFF4DD0E1)},
-      {"name": "Jazz", "color1": Color(0xFFBF360C), "color2": Color(0xFFFF7043)},
-      {"name": "K-Pop", "color1": Color(0xFF673AB7), "color2": Color(0xFF9575CD)},
-      {"name": "Latin", "color1": Color(0xFFD500F9), "color2": Color(0xFFEA80FC)},
-      {"name": "Classical", "color1": Color(0xFF00796B), "color2": Color(0xFF80CBC4)},
-      {"name": "Country", "color1": Color(0xFF795548), "color2": Color(0xFFD7CCC8)},
-      {"name": "Podcasts", "color1": Color(0xFFC2185B), "color2": Color(0xFFF48FB1)},
-      {"name": "Radio", "color1": Color(0xFF37474F), "color2": Color(0xFFB0BEC5)},
+      {"name": "Pop", "colors": [const Color(0xFF1A237E), const Color(0xFF0D164D)]},
+      {"name": "Hip-Hop", "colors": [const Color(0xFF00C853), const Color(0xFF2E7D32)]},
+      {"name": "R&B", "colors": [const Color(0xFF311B92), const Color(0xFF1A0A4D)]},
+      {"name": "Electronic", "colors": [const Color(0xFFC2185B), const Color(0xFF880E4F)]},
+      {"name": "Rock", "colors": [const Color(0xFF0288D1), const Color(0xFF4FC3F7)]},
+      {"name": "Jazz", "colors": [const Color(0xFF9E9E9E), const Color(0xFFEF9A9A)]},
+      {"name": "K-Pop", "colors": [const Color(0xFF7E57C2), const Color(0xFF5E35B1)]},
+      {"name": "Latin", "colors": [const Color(0xFFD500F9), const Color(0xFFAA00FF)]},
+      {"name": "Classical", "colors": [const Color(0xFF009688), const Color(0xFF4DB6AC)]},
+      {"name": "Country", "colors": [const Color(0xFF795548), const Color(0xFFD84315)]},
+      {"name": "Podcasts", "colors": [const Color(0xFFE91E63), const Color(0xFF880E4F)]},
+      {"name": "Radio", "colors": [const Color(0xFF0097A7), const Color(0xFFD4E157)]},
     ];
 
     return GridView.builder(
@@ -85,17 +98,18 @@ class SearchScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(20),
             gradient: LinearGradient(
-              colors: [categories[index]["color1"] as Color, categories[index]["color2"] as Color],
+              colors: categories[index]["colors"] as List<Color>,
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
           ),
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
+          alignment: Alignment.bottomLeft,
           child: Text(
             categories[index]["name"] as String,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
           ),
         );
       },

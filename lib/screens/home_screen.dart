@@ -39,13 +39,13 @@ class HomeScreen extends StatelessWidget {
                       letterSpacing: 1.2,
                     ),
                   ),
-                  const Text(
+                  Text(
                     "Raj",
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: 34,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      letterSpacing: -0.5,
+                      letterSpacing: -1.0,
                     ),
                   ),
                 ],
@@ -221,23 +221,34 @@ class HomeScreen extends StatelessWidget {
   Widget _buildTopPicks(MusicProvider musicProvider, BuildContext context) {
     final songs = musicProvider.songs.take(4).toList();
     return Column(
-      children: songs.map((song) => ListTile(
-        contentPadding: EdgeInsets.zero,
-        leading: ArtworkWidget(id: song.id, type: ArtworkType.AUDIO, size: 52, borderRadius: 14),
-        title: Text(song.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        subtitle: Text(
-          song.artist ?? "Unknown", 
-          style: TextStyle(color: Colors.grey.shade500, fontSize: 14, fontWeight: FontWeight.w500)
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("2:58", style: TextStyle(color: Colors.grey.shade400, fontSize: 13)),
-            const SizedBox(width: 12),
-            Icon(Icons.more_horiz_rounded, color: Colors.grey.shade300),
+      children: songs.map((song) => Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.black.withOpacity(0.08), width: 1.2),
+          boxShadow: [
+            BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4))
           ],
         ),
-        onTap: () => context.read<PlayerProvider>().playSong(musicProvider.songs, musicProvider.songs.indexOf(song)),
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          leading: ArtworkWidget(id: song.id, type: ArtworkType.AUDIO, size: 52, borderRadius: 12),
+          title: Text(song.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          subtitle: Text(
+            song.artist ?? "Unknown", 
+            style: TextStyle(color: Colors.grey.shade500, fontSize: 13, fontWeight: FontWeight.w500)
+          ),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("2:58", style: TextStyle(color: Colors.grey.shade400, fontSize: 13)),
+              const SizedBox(width: 12),
+              Icon(Icons.more_horiz_rounded, color: Colors.grey.shade300),
+            ],
+          ),
+          onTap: () => context.read<PlayerProvider>().playSong(musicProvider.songs, musicProvider.songs.indexOf(song)),
+        ),
       )).toList(),
     );
   }

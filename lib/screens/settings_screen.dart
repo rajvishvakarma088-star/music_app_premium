@@ -7,7 +7,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF9F9F9),
       body: CustomScrollView(
         slivers: [
           const SliverAppBar(
@@ -15,13 +15,13 @@ class SettingsScreen extends StatelessWidget {
             floating: false,
             pinned: true,
             elevation: 0,
-            backgroundColor: Colors.white,
-            surfaceTintColor: Colors.white,
+            backgroundColor: const Color(0xFFF9F9F9),
+            surfaceTintColor: const Color(0xFFF9F9F9),
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               title: Text(
                 "Settings", 
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.black, letterSpacing: -0.5)
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 34, color: Colors.black, letterSpacing: -1.0)
               ),
             ),
           ),
